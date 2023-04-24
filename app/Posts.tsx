@@ -1,17 +1,12 @@
 import {createClient} from '@supabase/supabase-js'
-
-export const revalidate = 0
-
-export default async function Page() {
+export default async function Posts() {
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
-  const data = await supabase.from('posts').select('*')
-
-  console.log(data)
+  const {data: posts } = await supabase.from('posts').select('id, title, content')
 
   return (
-    <pre>nix</pre>
+    <pre>{JSON.stringify(posts, null, 2)}</pre>
   )
 }
